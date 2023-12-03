@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/a0e831595e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="card">
+        <div class="search">
+            <input type="text" placeholder="Enter City Name">
+            <button><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/search--v1.png" alt="search--v1"/></button>
+        </div>
+        <class="weather">
+            <img width="48" height="48" src="https://img.icons8.com/fluency/48/clouds--v3.png" alt="clouds--v3"/>
+            <h1 class="temp">22°C</h1>
+            <h2 class="city">New York</h2>
+            <div class="details">
+                <div class="col">
+                    <img width="40" height="48" margin-top="30px" margin-right="10px"  src="https://img.icons8.com/fluency/48/humidity.png" alt="humidity"/>
+                    <div>
+                        <p class="humidity">50%</p>
+                        <p>Humidity</p>
+                    </div>
+                    <div class="col">
+                       <div class="colW"><img width="40" height="48" src="https://img.icons8.com/fluency/48/wind.png" alt="wind"/></div>
+                        <div>
+                            <p class="Wind">15 km/hr</p>
+                            <p>Wind Speed</p>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        const apiKey ="bbc893524a863fdbc9135fadb46178ca";
+        const apiUrl ="https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+
+        const searchBox = document.querySelector(".search input");
+        const searchBtn = document.querySelector(".search button");
+        const Icon = document.querySelector(".weather");
+
+
+        async function cheackWeather(city){
+            const response = await fetch(apiUrl+ city + `&appid=${apiKey}`);
+            var data = await response.json();
+            console.log(data);
+            document.querySelector(".city").innerHTML=data.name;
+            document.querySelector(".temp").innerHTML=data.main.temp + "°c";
+            document.querySelector(".humidity").innerHTML=data.main.humidity + "%";
+            document.querySelector(".Wind") .innerHTML=data.wind.speed + "km/hr";
+            
+
+
+        if(data.weather[0].main== "cloud"){
+               weather.src="<i class=fa-solid fa-cloud></i>";
+        }
+        else if(data.weather[0].main== "clear"){
+               weather.src="<i class=fa-thin fa-cloud></i>";
+        }
+        else if(data.weather[0].main== "rain"){
+                 weather.src= "<i class=fa-solid fa-cloud-showers-heavy></i>";
+        }
+        else if(data.weather[0].main== "drizzle"){ 
+                  weather.src="<i class=fa-regular fa-cloud-sun></i>";
+        }
+            
+            
+            
+            
+
+        }
+
+            searchBtn.addEventListener("click",()=>{
+            cheackWeather(searchBox.value);
+             })
+        
+    </script>
+    
+    
+</body>
+</html>
